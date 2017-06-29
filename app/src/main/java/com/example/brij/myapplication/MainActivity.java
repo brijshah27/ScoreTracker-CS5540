@@ -50,16 +50,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 //    private void makeNewsQurey() {
-//        //String newsQuery = " ";
-//        URL newsUrl = NetworkUtils.buildUrl();
+//        String newsQuery = " ";
+//      URL newsUrl = NetworkUtils.buildUrl();
 //        new NewsTask().execute(newsUrl);
+//        errorMessgaeTextView.setVisibility(View.INVISIBLE);
 //    }
 
     private void showErrorMessage() {
 
         errorMessgaeTextView.setVisibility(View.VISIBLE);
-
-
     }
 
     public class NewsTask extends AsyncTask<URL, Void,ArrayList<NewsItem>> {
@@ -69,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressIndicator.setVisibility(View.VISIBLE);
-            Log.d(TAG, "status:" + progressIndicator.getVisibility());
+
 
         }
 
