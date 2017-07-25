@@ -1,7 +1,5 @@
 package com.example.brij.myapplication;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,14 +12,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.brij.myapplication.model.NewsItem;
+import com.example.brij.myapplication.model.NBAData;
+import com.example.brij.myapplication.utilities.NBAAdapter;
 import com.example.brij.myapplication.utilities.NetworkUtils;
-import com.example.brij.myapplication.utilities.NewsAdapter;
 import com.example.brij.myapplication.utilities.parseJSON;
 
 import org.json.JSONException;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -43,25 +40,18 @@ public class MainActivity extends AppCompatActivity {
 
         progressIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
         errorMessgaeTextView = (TextView) findViewById(R.id.error_message_display);
-        rv = (RecyclerView) findViewById(R.id.news_response_result);
+        rv = (RecyclerView) findViewById(R.id.nba_response_result);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
 
     }
-
-//    private void makeNewsQurey() {
-//        String newsQuery = " ";
-//      URL newsUrl = NetworkUtils.buildUrl();
-//        new NewsTask().execute(newsUrl);
-//        errorMessgaeTextView.setVisibility(View.INVISIBLE);
-//    }
 
     private void showErrorMessage() {
 
         errorMessgaeTextView.setVisibility(View.VISIBLE);
     }
 
-    public class NewsTask extends AsyncTask<URL, Void,ArrayList<NewsItem>> {
+    public class NewsTask extends AsyncTask<String, Void, ArrayList<NBAData>> {
 
 
         @Override
@@ -75,36 +65,29 @@ public class MainActivity extends AppCompatActivity {
 
 
         @Override
-        protected ArrayList<NewsItem> doInBackground(URL... params) {
-            ArrayList<NewsItem> news= null;
-            URL newsURL = NetworkUtils.buildUrl();
-            Log.d(TAG, "url: " + newsURL.toString());
+        protected ArrayList<NBAData> doInBackground(String... params) {
+            ArrayList<NBAData> news= null;
+           // URL newsURL = NetworkUtils.buildUrl();
+            //Log.d(TAG, "url: " + newsURL.toString());
 
             try {
-                String json = NetworkUtils.getResponseFromHttpUrl(newsURL);
-                news = parseJSON.parseJsonData(json);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+                String json = NetworkUtils.getResponseFromHttpUrl();
+                news = parseJSON.parseJsonData(MainActivity.this , json);
+            }
+             catch(JSONException e) {
                 e.printStackTrace();
             }
             return news;
         }
 
         @Override
-        protected void onPostExecute(final ArrayList<NewsItem> data) {
+        protected void onPostExecute(final ArrayList<NBAData> data) {
             super.onPostExecute(data);
             progressIndicator.setVisibility(View.INVISIBLE);
             errorMessgaeTextView.setVisibility(View.INVISIBLE);
             if (data!=null) {
-                NewsAdapter adapter = new NewsAdapter(data, new NewsAdapter.ItemClickListener() {
-                    @Override
-                    public void onItemClick(int clickedItemIndex) {
-                        String url = data.get(clickedItemIndex).getUrl();
-                        Log.d(TAG, String.format("Url %s", url));
-                        openWebPage(url);
-                    }
-                });
+                Log.d(TAG, "g");
+                NBAAdapter adapter = new NBAAdapter(data);
                         rv.setAdapter(adapter);
 
             } else {
@@ -116,13 +99,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void openWebPage(String url) {
-        Uri webpage = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        }
-    }
+//    public void openWebPage(String url) {
+//        Uri webpage = Uri.parse(url);
+//        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+//        if (intent.resolveActivity(getPackageManager()) != null) {
+//            startActivity(intent);
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

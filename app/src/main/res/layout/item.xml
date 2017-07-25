@@ -10,26 +10,26 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/author"
+        android:id="@+id/homeTeam"
         android:textSize="20sp"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tittle"
+        android:id="@+id/awayTeam"
         android:textSize="20sp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/desc"
+        android:id="@+id/homeTeamCity"
         android:textSize="20sp"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/url"
+        android:id="@+id/awayTeamCity"
         android:textSize="20sp"
         />
 
@@ -37,9 +37,23 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/date"
+        android:id="@+id/homeTeamScore"
         android:textSize="20sp"
         android:layout_marginBottom="20sp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/awayTeamScore"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/location"
+        android:textSize="20sp"
         />
 
 

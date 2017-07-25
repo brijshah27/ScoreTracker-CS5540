@@ -1,68 +1,76 @@
 package com.example.brij.myapplication.utilities;
 
+import android.annotation.TargetApi;
 import android.net.Uri;
+import android.nfc.Tag;
+import android.os.Build;
+import android.util.Base64;
+import android.util.Log;
 
-import java.io.IOException;
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
+
 
 /**
  * Created by Brij on 6/21/17.
  */
 
 public class NetworkUtils {
-    final static String NEWS_BASE_URL = "https://newsapi.org/v1/articles";
 
-    final static String PARAM_SOURCE = "source";
-
-    final static String PARAM_SORT = "sortBy";
-
-    final static String PARAM_API = "apiKey";
-
-    final static String sortBy = "latest";
-
-    final static String source = "the-next-web";
-
-    final static String apiKey = "d526a960882941848faf5fd5d868ccd8";
+    final static String TAG = "NetworkUtills";
 
 
-    public static URL buildUrl(){
-        Uri builtUri = Uri.parse(NEWS_BASE_URL).buildUpon()
-                .appendQueryParameter(PARAM_SOURCE,source)
-                .appendQueryParameter(PARAM_SORT,sortBy)
-                .appendQueryParameter(PARAM_API, apiKey)
-                .build();
-
-        URL url = null;
-
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public static String getResponseFromHttpUrl()  {
+        String data = " ";
+        StringBuilder builder = new StringBuilder();
         try {
-            url = new URL(builtUri.toString());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
 
-        return url;
-    }
+            URL url = new URL("https://api.mysportsfeeds.com/v1.1/pull/nba/2017-playoff/scoreboard.json?fordate=20170424");
+            String testValue = "brijshah27:brij1234";
+            byte[] data1=testValue.getBytes(StandardCharsets.UTF_8);
+           String encoding=Base64.encodeToString(data1 ,Base64.DEFAULT);
+           //String  encoding="Basic " + new String(android.util.Base64.encode(testValue.getBytes(), android.util.Base64.NO_WRAP));
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setDoInput(true);
+           // connection.setDoOutput(true);
+            connection.setRequestProperty("Authorization", "Basic "+ encoding );
+            InputStream content = (InputStream)connection.getInputStream();
+//            BufferedReader in   =
+//                    new BufferedReader (new InputStreamReader(content));
+//            String line;
+//
+//            while ((line = in.readLine()) != null)
+//            {
+//                builder.append(line);
+//
+//            }
 
-    public static String getResponseFromHttpUrl(URL url) throws IOException {
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        try {
-            InputStream in = urlConnection.getInputStream();
-
-            Scanner scanner = new Scanner(in);
+            Scanner scanner = new Scanner(content);
             scanner.useDelimiter("\\A");
 
             boolean hasInput = scanner.hasNext();
             if (hasInput) {
-                return scanner.next();
+                data=data+scanner.next();
             } else {
-                return null;
+                data=null;
             }
-        } finally {
-            urlConnection.disconnect();
         }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            Log.d(TAG ,"hello");
+
+        }
+        Log.d(TAG, data);
+        return  data;
+
     }
 }
