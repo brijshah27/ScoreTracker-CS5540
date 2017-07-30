@@ -29,7 +29,7 @@ public class parseJSON {
 
 
 
-        for(int i=0; i<gameScore.length(); i++){
+        for(int i=0; i<2; i++){
             JSONObject gameObject = gameScore.getJSONObject(i); //contains data under first {
             JSONObject game = gameObject.getJSONObject("game");
             String id = game.getString("ID");
@@ -50,5 +50,7 @@ public class parseJSON {
 
         return result;
     }
+
+
 
 }

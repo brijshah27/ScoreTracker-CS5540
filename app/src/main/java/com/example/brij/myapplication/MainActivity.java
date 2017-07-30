@@ -19,7 +19,6 @@ import com.example.brij.myapplication.utilities.parseJSON;
 
 import org.json.JSONException;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public class NewsTask extends AsyncTask<String, Void, ArrayList<NBAData>> {
 
 
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -66,18 +66,36 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<NBAData> doInBackground(String... params) {
-            ArrayList<NBAData> news= null;
+            ArrayList<NBAData> nba= null;
+            ArrayList<NBAData> mlb= null;
+
+            //New arrayList to keep all scores togather.
+            ArrayList<NBAData> scoreFinal= new ArrayList<>();
+
            // URL newsURL = NetworkUtils.buildUrl();
             //Log.d(TAG, "url: " + newsURL.toString());
 
             try {
-                String json = NetworkUtils.getResponseFromHttpUrl();
-                news = parseJSON.parseJsonData(MainActivity.this , json);
+                //two calls for diffrent apis
+
+                //NBA api call
+                String jsonNBA = NetworkUtils.getResponseFromHttpUrl();
+                nba = parseJSON.parseJsonData(MainActivity.this , jsonNBA);
+
+                //MLB api call
+                String jsonMLB = NetworkUtils.getResponseFromHttpUrlMlb();
+                mlb = parseJSON.parseJsonData(MainActivity.this , jsonMLB);
+
+
+                //adding all api results.
+                scoreFinal.addAll(nba);
+                scoreFinal.addAll(mlb);;
             }
              catch(JSONException e) {
                 e.printStackTrace();
             }
-            return news;
+            return scoreFinal;
+
         }
 
         @Override
@@ -89,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "g");
                 NBAAdapter adapter = new NBAAdapter(data);
                         rv.setAdapter(adapter);
+//                NBAAdapter adapternhl = new NBAAdapter(newsNhl);
+//                rv.setAdapter(adapternhl);
 
             } else {
                 showErrorMessage();

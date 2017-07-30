@@ -82,9 +82,9 @@ public class NBAAdapter extends RecyclerView.Adapter<NBAAdapter.ItemHolder> {
             awayteam.setText("Away Team: "+ items.getAwayTeam());
             homeTeamCity.setText("Home Team City: "+items.getAwayTeam());
             awayTeamCity.setText("Away Team City: "+items.getAwayTeamCity());
-            homeTeamScore.setText("Home team score:: "+items.getHomeScore());
-            awayTeamScore.setText("Away team score:"+items.getAwayScore());
-            location.setText("Location"+items.getLocation());
+            homeTeamScore.setText("Home team score: "+items.getHomeScore());
+            awayTeamScore.setText("Away team score: "+items.getAwayScore());
+            location.setText("Location: "+items.getLocation());
 
         }
 
