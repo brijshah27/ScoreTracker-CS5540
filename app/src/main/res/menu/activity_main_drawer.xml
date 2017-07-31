@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:title="Sport List">
+        <menu>
+            <item
+                android:id="@+id/nav_nbs"
+                android:title="NBA" />
+            <item
+                android:id="@+id/nav_mlb"
+                android:title="MLB" />
+        </menu>
+    </item>
+</menu>
