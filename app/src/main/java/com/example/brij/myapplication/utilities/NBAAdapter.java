@@ -66,7 +66,7 @@ public class NBAAdapter extends RecyclerView.Adapter<NBAAdapter.ItemHolder> {
         TextView awayTeamCity;
         TextView homeTeamScore;
         TextView awayTeamScore;
-        TextView location;
+        TextView Location;
 
         ItemHolder(View view){
             super(view);
@@ -74,9 +74,9 @@ public class NBAAdapter extends RecyclerView.Adapter<NBAAdapter.ItemHolder> {
             awayTeam = (TextView)view.findViewById(R.id.awayTeam);
             homeTeamCity = (TextView)view.findViewById(R.id.homeTeamCity);
             awayTeamCity = (TextView)view.findViewById(R.id.awayTeamCity);
-            homeTeamScore = (TextView)view.findViewById(R.id.homeTeamCity);
+            homeTeamScore = (TextView)view.findViewById(R.id.homeTeamScore);
             awayTeamScore = (TextView)view.findViewById(R.id.awayTeamScore);
-            location = (TextView)view.findViewById(R.id.location);
+            Location = (TextView)view.findViewById(R.id.location);
             //view.setOnClickListener(this);
         }
 
@@ -97,14 +97,16 @@ public class NBAAdapter extends RecyclerView.Adapter<NBAAdapter.ItemHolder> {
             String awayteamcity=cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_AWAYTEAMCITY));
             String hometeamscore=cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_HOMESCORE));
             String awayteamscore=cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_AWAYSCORE));
-
+            String location=cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_LOCATION));
 
             homeTeam.setText("Home Team :"+hometeam);
             awayTeam.setText("Away Team :"+awayteam);
-            homeTeamCity.setText("Home Team City :"+hometeamcity);
-            awayTeamCity.setText("Away Team City :"+awayteamcity);
+            //homeTeamCity.setText("Home Team City :"+hometeamcity);
+            //awayTeamCity.setText("Away Team City :"+awayteamcity);
             homeTeamScore.setText("Home Team Score :"+hometeamscore);
             awayTeamScore.setText("Away Team Score :"+awayteamscore);
+            //Location.setText("Location is :"+location);
+
 
         }
 

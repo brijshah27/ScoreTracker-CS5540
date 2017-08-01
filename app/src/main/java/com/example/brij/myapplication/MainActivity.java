@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.brij.myapplication.Database.DBHelper;
 import com.example.brij.myapplication.Database.DBUtils;
+import com.example.brij.myapplication.Scheduler.SchedulerUtils;
 import com.example.brij.myapplication.model.NBAData;
 import com.example.brij.myapplication.utilities.NBAAdapter;
 import com.example.brij.myapplication.utilities.NetworkUtils;
@@ -66,16 +67,39 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        db=new DBHelper(this).getReadableDatabase();
+        cursor=DBUtils.getAllitems(db);
+        nbaAdapter=new NBAAdapter(cursor,this);
+
+
+
+
+        SchedulerUtils.scheduleRefresh(this);
+
+
 
 
         progressIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
         errorMessgaeTextView = (TextView) findViewById(R.id.error_message_display);
         rv = (RecyclerView) findViewById(R.id.nba_response_result);
 
-
+        rv.setAdapter(nbaAdapter);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
 
+    }
+
+
+    @Override protected void onStart() {
+        super.onStart();
+        //Initialize the scheduler
+        SchedulerUtils.scheduleRefresh(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SchedulerUtils.stopScheduledNewsLoad(this);
     }
 
     private void showErrorMessage() {
