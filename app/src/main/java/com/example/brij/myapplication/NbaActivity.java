@@ -281,6 +281,8 @@ public class NbaActivity extends AppCompatActivity implements NavigationView.OnN
 
     @Override
     public void onItemClick(int clickedItemIndex) {
-
+        Log.d(TAG, "*********WE'RE HERE*************");
+        Intent detailsIntent = new Intent(this, GameDetails.class);
+        startActivity(detailsIntent);
     }
 }
