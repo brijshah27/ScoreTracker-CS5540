@@ -62,7 +62,7 @@ public class DBUtils {
             db.close();
         }
     }
-    private static void deleteNewsitem(SQLiteDatabase db) {
+    public static void deleteNewsitem(SQLiteDatabase db) {
         db.delete(Contract.TABLE_GAMES.TABLE_NAME, null, null);
     }
 }
