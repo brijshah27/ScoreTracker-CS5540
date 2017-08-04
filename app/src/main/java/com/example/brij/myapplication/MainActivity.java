@@ -6,10 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 
 import com.example.brij.myapplication.Database.DBHelper;
 import com.example.brij.myapplication.Database.DBUtils;
+import com.example.brij.myapplication.Fragments.NbaFrag;
 import com.example.brij.myapplication.Scheduler.SchedulerUtils;
 import com.example.brij.myapplication.model.NBAData;
 import com.example.brij.myapplication.utilities.NBAAdapter;
@@ -64,6 +66,10 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+
+
+
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -90,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
     }
 
 
+
+
+
     @Override protected void onStart() {
         super.onStart();
         //Initialize the scheduler
@@ -110,9 +119,25 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
+
+        Fragment frag=null;
+        switch (item.getItemId())
+        {
+            case R.id.nav_nbs:
+                Log.d(TAG,"MAIN ACTIVITY-NBA LISTS");
+                frag= NbaFrag.newInstance();
+                break;
+
+            default:
+                Log.e(TAG,"Navigation Error Occurred");
+                Log.e(TAG,"Navigation ID:" +item.getItemId());
+        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_view, frag);
+        transaction.commit();
+       return true;
     }
 
     @Override
@@ -296,6 +321,6 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
     @Override
     public void onItemClick(int clickedItemIndex) {
-
+            Log.d(TAG,"In onItemCLiCK--------" +clickedItemIndex);
     }
 }
