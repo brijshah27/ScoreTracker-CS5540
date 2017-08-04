@@ -21,8 +21,12 @@
 
         <service android:name=".Scheduler.Refresher" />
 
+<<<<<<< HEAD
         <activity android:name=".NbaActivity" />
         <activity android:name=".GameDetails"></activity>
+=======
+        <activity android:name=".debug"></activity>
+>>>>>>> 8c4bf8c5c3ec46bd5013098937cca39a9489888c
     </application>
 
 </manifest>
