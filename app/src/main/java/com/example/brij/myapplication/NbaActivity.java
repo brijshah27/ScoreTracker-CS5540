@@ -1,13 +1,11 @@
 package com.example.brij.myapplication;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -35,9 +33,9 @@ import com.example.brij.myapplication.utilities.parseJSON;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements OnNavigationItemSelectedListener , LoaderManager.LoaderCallbacks<ArrayList<Void>>, NBAAdapter.ItemClickListener{
+public class NbaActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<Void>>, NBAAdapter.ItemClickListener {
 
-    static final String TAG = "mainactivity";
+    static final String TAG = "NBA activity";
 
     private TextView errorMessgaeTextView;
 
@@ -45,17 +43,30 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
 
     private Cursor cursor;
-    private NBAAdapter nbaAdapter;
+    private NBAAdapter nbaAdapter2;
     private SQLiteDatabase db;
 
-    private static final int LOADER = 1;
+    private String gameName;
+
+    private static final int LOADER = 2;
 
     private RecyclerView rv;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                gameName= null;
+            } else {
+                gameName= extras.getString("gameName");
+            }
+        } else {
+            gameName= (String) savedInstanceState.getSerializable("gameName");
+        }
+        Log.d(TAG, "Game name is:"+gameName);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -70,8 +81,8 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         navigationView.setNavigationItemSelectedListener(this);
 
         db=new DBHelper(this).getReadableDatabase();
-        cursor=DBUtils.getAllitems(db);
-        nbaAdapter=new NBAAdapter(cursor,this);
+        cursor= DBUtils.getAllitems(db);
+        nbaAdapter2=new NBAAdapter(cursor,this);
 
 
 
@@ -85,14 +96,14 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         errorMessgaeTextView = (TextView) findViewById(R.id.error_message_display);
         rv = (RecyclerView) findViewById(R.id.nba_response_result);
 
-        rv.setAdapter(nbaAdapter);
+
+        rv.setAdapter(nbaAdapter2);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
-
     }
 
-
-    @Override protected void onStart() {
+    @Override
+    protected void onStart() {
         super.onStart();
         //Initialize the scheduler
         DBUtils.deleteNewsitem(db);
@@ -114,11 +125,8 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-
         int id = item.getItemId();
 
-        FragmentManager fragmentManager = getFragmentManager();
 
 
 
@@ -150,7 +158,6 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
         return true;
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -160,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
             super.onBackPressed();
         }
     }
-
     @Override
     public Loader<ArrayList<Void>> onCreateLoader(int id, Bundle args) {
         return new AsyncTaskLoader<ArrayList<Void>>(this) {
@@ -183,28 +189,36 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
             public ArrayList<Void> loadInBackground() {
 
-                    try {
-                        String jsonNBA = NetworkUtils.getResponseFromHttpUrl();
-                        nba = parseJSON.parseJsonData(MainActivity.this , jsonNBA);
+                try {
+                    String jsonNBA = null;
 
-                        Log.d(TAG,"NBA------------"+jsonNBA);
-
-                        String jsonMLB = NetworkUtils.getResponseFromHttpUrlMlb();
-                        mlb = parseJSON.parseJsonData(MainActivity.this , jsonMLB);
-
-                        scoreFinal.addAll(nba);
-                        scoreFinal.addAll(mlb);
-
-                        db=new DBHelper(this.getContext()).getWritableDatabase();
-                        DBUtils.insertnews(db,scoreFinal);
-
-
+                    if(gameName.equals("nba")) {
+                        jsonNBA  = NetworkUtils.getResponseFromHttpUrl();
 
                     }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
+                    else if(gameName.equals("mlb")){
+                        jsonNBA  = NetworkUtils.getResponseFromHttpUrlMlb();
                     }
+                    nba = parseJSON.parseJsonData(NbaActivity.this, jsonNBA);
+
+                    Log.d(TAG,"NBA------------"+jsonNBA);
+
+//                    String jsonMLB = NetworkUtils.getResponseFromHttpUrlMlb();
+//                    mlb = parseJSON.parseJsonData(MainActivity.this , jsonMLB);
+
+                    scoreFinal.addAll(nba);
+                    //scoreFinal.addAll(mlb);
+
+                    db=new DBHelper(this.getContext()).getWritableDatabase();
+                    DBUtils.insertnews(db,scoreFinal);
+
+
+
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
 
 
                 return null;
@@ -219,11 +233,11 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         progressIndicator.setVisibility(View.INVISIBLE);
         errorMessgaeTextView.setVisibility(View.INVISIBLE);
 
-        db=new DBHelper(MainActivity.this).getReadableDatabase();
+        db=new DBHelper(NbaActivity.this).getReadableDatabase();
         cursor=DBUtils.getAllitems(db);
-        nbaAdapter=new NBAAdapter(cursor,this);
-        rv.setAdapter(nbaAdapter);
-        nbaAdapter.notifyDataSetChanged();
+        nbaAdapter2=new NBAAdapter(cursor,this);
+        rv.setAdapter(nbaAdapter2);
+        nbaAdapter2.notifyDataSetChanged();
 
 
 //
@@ -237,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 //        } else {
 //            showErrorMessage();
 
-       // }
+        // }
 
     }
 
@@ -246,82 +260,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
     }
 
-//    public class NewsTask extends AsyncTask<String, Void, ArrayList<NBAData>> {
 //
-//
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            progressIndicator.setVisibility(View.VISIBLE);
-//
-//
-//        }
-//
-//
-//
-//        @Override
-//        protected ArrayList<NBAData> doInBackground(String... params) {
-//            ArrayList<NBAData> nba= null;
-//            ArrayList<NBAData> mlb= null;
-//
-//            //New arrayList to keep all scores togather.
-//            ArrayList<NBAData> scoreFinal= new ArrayList<>();
-//
-//           // URL newsURL = NetworkUtils.buildUrl();
-//            //Log.d(TAG, "url: " + newsURL.toString());
-//
-//            try {
-//                //two calls for diffrent apis
-//
-//                //NBA api call
-//                String jsonNBA = NetworkUtils.getResponseFromHttpUrl();
-//                nba = parseJSON.parseJsonData(MainActivity.this , jsonNBA);
-//
-//                //MLB api call
-//                String jsonMLB = NetworkUtils.getResponseFromHttpUrlMlb();
-//                mlb = parseJSON.parseJsonData(MainActivity.this , jsonMLB);
-//
-//
-//                //adding all api results.
-//                scoreFinal.addAll(nba);
-//                scoreFinal.addAll(mlb);;
-//            }
-//             catch(JSONException e) {
-//                e.printStackTrace();
-//            }
-//            return scoreFinal;
-//
-//        }
-//
-//        @Override
-//        protected void onPostExecute(final ArrayList<NBAData> data) {
-//            super.onPostExecute(data);
-//            progressIndicator.setVisibility(View.INVISIBLE);
-//            errorMessgaeTextView.setVisibility(View.INVISIBLE);
-//            if (data!=null) {
-//                Log.d(TAG, "g");
-//                NBAAdapter adapter = new NBAAdapter(data);
-//                        rv.setAdapter(adapter);
-////                NBAAdapter adapternhl = new NBAAdapter(newsNhl);
-////                rv.setAdapter(adapternhl);
-//
-//            } else {
-//                showErrorMessage();
-//
-//            }
-//            //return data;
-//        }
-//
-//    }
-
-//    public void openWebPage(String url) {
-//        Uri webpage = Uri.parse(url);
-//        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-//        if (intent.resolveActivity(getPackageManager()) != null) {
-//            startActivity(intent);
-//        }
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -333,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemSelected = item.getItemId();
         if (itemSelected == R.id.action_search) {
-          LoaderManager loaderManager=getSupportLoaderManager();
+            LoaderManager loaderManager=getSupportLoaderManager();
             loaderManager.restartLoader(LOADER,null,this).forceLoad();
         }
 
