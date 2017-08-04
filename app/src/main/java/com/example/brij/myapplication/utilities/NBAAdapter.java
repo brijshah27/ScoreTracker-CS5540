@@ -30,7 +30,7 @@ public class NBAAdapter extends RecyclerView.Adapter<NBAAdapter.ItemHolder> {
     }
 
     public interface ItemClickListener {
-        void onItemClick(int clickedItemIndex);
+        void onItemClick(Cursor cursor,int clickedItemIndex);
     }
 
     @Override
@@ -113,16 +113,10 @@ public class NBAAdapter extends RecyclerView.Adapter<NBAAdapter.ItemHolder> {
         @Override
         public void onClick(View v) {
             int pos = getAdapterPosition();
-           listener.onItemClick(pos);
+           listener.onItemClick(cursor,pos);
 
         }
 
-
-//        @Override
-//        public void onClick(View v) {
-//            int pos = getAdapterPosition();
-//            listener.onItemClick(pos);
-//        }
     }
 
 }

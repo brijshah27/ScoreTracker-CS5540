@@ -280,7 +280,7 @@ public class NbaActivity extends AppCompatActivity implements NavigationView.OnN
     }
 
     @Override
-    public void onItemClick(int clickedItemIndex) {
+    public void onItemClick(Cursor cursor, int pos) {
 
     }
 }
