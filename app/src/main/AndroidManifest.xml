@@ -8,10 +8,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashScreenActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,12 +24,10 @@
 
         <service android:name=".Scheduler.Refresher" />
 
-<<<<<<< HEAD
-        <activity android:name=".debug"></activity>
-=======
+        <activity android:name=".debug" />
         <activity android:name=".NbaActivity" />
-        <activity android:name=".GameDetails"></activity>
->>>>>>> 18289654aaba7afae1991ceb75f42742576ea89d
+        <activity android:name=".GameDetails" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>
