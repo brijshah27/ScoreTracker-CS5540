@@ -77,7 +77,7 @@ public class NBAAdapter extends RecyclerView.Adapter<NBAAdapter.ItemHolder> {
             homeTeamScore = (TextView)view.findViewById(R.id.homeTeamScore);
             awayTeamScore = (TextView)view.findViewById(R.id.awayTeamScore);
             Location = (TextView)view.findViewById(R.id.location);
-            //view.setOnClickListener(this);
+             view.setOnClickListener(this);
         }
 
         public void bind(int pos){
