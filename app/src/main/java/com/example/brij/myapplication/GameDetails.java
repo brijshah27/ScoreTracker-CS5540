@@ -16,7 +16,7 @@ public class GameDetails extends AppCompatActivity implements NavigationView.OnN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game_details);
 
         mGameDetailsTv = (TextView) findViewById(R.id.gameDetails);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -31,7 +31,7 @@ public class GameDetails extends AppCompatActivity implements NavigationView.OnN
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mGameDetailsTv.setText("asdasd");
+       // mGameDetailsTv.setText("asdasd");
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

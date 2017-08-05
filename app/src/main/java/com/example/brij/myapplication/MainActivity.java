@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.brij.myapplication.Database.Contract;
 import com.example.brij.myapplication.Database.DBHelper;
 import com.example.brij.myapplication.Database.DBUtils;
 import com.example.brij.myapplication.Scheduler.SchedulerUtils;
@@ -35,7 +36,7 @@ import com.example.brij.myapplication.utilities.parseJSON;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements OnNavigationItemSelectedListener , LoaderManager.LoaderCallbacks<ArrayList<Void>>, NBAAdapter.ItemClickListener{
+public class MainActivity extends AppCompatActivity implements OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<Void>>, NBAAdapter.ItemClickListener {
 
     static final String TAG = "mainactivity";
 
@@ -69,16 +70,12 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        db=new DBHelper(this).getReadableDatabase();
-        cursor=DBUtils.getAllitems(db);
-        nbaAdapter=new NBAAdapter(cursor,this);
-
-
+        db = new DBHelper(this).getReadableDatabase();
+        cursor = DBUtils.getAllitems(db);
+        nbaAdapter = new NBAAdapter(cursor, this);
 
 
         SchedulerUtils.scheduleRefresh(this);
-
-
 
 
         progressIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
@@ -92,12 +89,13 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
     }
 
 
-    @Override protected void onStart() {
+    @Override
+    protected void onStart() {
         super.onStart();
         //Initialize the scheduler
         DBUtils.deleteNewsitem(db);
-        LoaderManager loaderManager=getSupportLoaderManager();
-        loaderManager.restartLoader(LOADER,null,this).forceLoad();
+        LoaderManager loaderManager = getSupportLoaderManager();
+        loaderManager.restartLoader(LOADER, null, this).forceLoad();
         SchedulerUtils.scheduleRefresh(this);
     }
 
@@ -121,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         FragmentManager fragmentManager = getFragmentManager();
 
 
-
         if (id == R.id.nav_nba) {
             Intent intent = new Intent(this, NbaActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -130,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
             startActivity(intent);
 
         }
-        if(id==R.id.nav_mlb){
+        if (id == R.id.nav_mlb) {
             Intent intent = new Intent(this, NbaActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             //String gameName = null;
@@ -138,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
             startActivity(intent);
 
         }
-        if(id==R.id.nav_all){
+        if (id == R.id.nav_all) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             //String gameName = null;
@@ -159,6 +156,8 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         } else {
             super.onBackPressed();
         }
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -175,36 +174,34 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
             }
 
-            ArrayList<NBAData> nba= null;
-            ArrayList<NBAData> mlb= null;
+            ArrayList<NBAData> nba = null;
+            ArrayList<NBAData> mlb = null;
 
-            ArrayList<NBAData> scoreFinal= new ArrayList<>();
+            ArrayList<NBAData> scoreFinal = new ArrayList<>();
+
             @Override
 
             public ArrayList<Void> loadInBackground() {
 
-                    try {
-                        String jsonNBA = NetworkUtils.getResponseFromHttpUrl();
-                        nba = parseJSON.parseJsonData(MainActivity.this , jsonNBA);
+                try {
+                    String jsonNBA = NetworkUtils.getResponseFromHttpUrl();
+                    nba = parseJSON.parseJsonData(MainActivity.this, jsonNBA);
 
-                        Log.d(TAG,"NBA------------"+jsonNBA);
+                    Log.d(TAG, "NBA------------" + jsonNBA);
 
-                        String jsonMLB = NetworkUtils.getResponseFromHttpUrlMlb();
-                        mlb = parseJSON.parseJsonData(MainActivity.this , jsonMLB);
+                    String jsonMLB = NetworkUtils.getResponseFromHttpUrlMlb();
+                    mlb = parseJSON.parseJsonData(MainActivity.this, jsonMLB);
 
-                        scoreFinal.addAll(nba);
-                        scoreFinal.addAll(mlb);
+                    scoreFinal.addAll(nba);
+                    scoreFinal.addAll(mlb);
 
-                        db=new DBHelper(this.getContext()).getWritableDatabase();
-                        DBUtils.insertnews(db,scoreFinal);
+                    db = new DBHelper(this.getContext()).getWritableDatabase();
+                    DBUtils.insertnews(db, scoreFinal);
 
 
-
-                    }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
 
                 return null;
@@ -219,9 +216,9 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         progressIndicator.setVisibility(View.INVISIBLE);
         errorMessgaeTextView.setVisibility(View.INVISIBLE);
 
-        db=new DBHelper(MainActivity.this).getReadableDatabase();
-        cursor=DBUtils.getAllitems(db);
-        nbaAdapter=new NBAAdapter(cursor,this);
+        db = new DBHelper(MainActivity.this).getReadableDatabase();
+        cursor = DBUtils.getAllitems(db);
+        nbaAdapter = new NBAAdapter(cursor, this);
         rv.setAdapter(nbaAdapter);
         nbaAdapter.notifyDataSetChanged();
 
@@ -237,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 //        } else {
 //            showErrorMessage();
 
-       // }
+        // }
 
     }
 
@@ -333,8 +330,8 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemSelected = item.getItemId();
         if (itemSelected == R.id.action_search) {
-          LoaderManager loaderManager=getSupportLoaderManager();
-            loaderManager.restartLoader(LOADER,null,this).forceLoad();
+            LoaderManager loaderManager = getSupportLoaderManager();
+            loaderManager.restartLoader(LOADER, null, this).forceLoad();
         }
 
         return true;
@@ -342,6 +339,27 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
     @Override
     public void onItemClick(int clickedItemIndex) {
+        SchedulerUtils.stopScheduledNewsLoad(this);
+        cursor.moveToPosition(clickedItemIndex);
+// Intent intent=new Intent(this,GameDetails.class);
+        String hometeam = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_HOMETEAM));
+        String awayteam = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_AWAYTEAM));
+        String hometeamcity = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_HOMETEAMCITY));
+        String awayteamcity = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_AWAYTEAMCITY));
+        String hometeamscore = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_HOMESCORE));
+        String awayteamscore = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_AWAYSCORE));
+        String location = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_LOCATION));
+        findViewById(R.id.nba_response_result).setVisibility(View.GONE);
+        Bundle bundle = new Bundle();
+        bundle.putString("hometeam", hometeam);
+        NbaFragment fragobj = new NbaFragment();
+        fragobj.setArguments(bundle);
 
+        FragmentManager fragmentManager = getFragmentManager();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.contentMain, fragobj)
+                .addToBackStack(null)
+                .commit();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.brij.myapplication;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.brij.myapplication.Database.Contract;
 import com.example.brij.myapplication.Database.DBHelper;
 import com.example.brij.myapplication.Database.DBUtils;
 import com.example.brij.myapplication.Scheduler.SchedulerUtils;
@@ -166,6 +168,8 @@ public class NbaActivity extends AppCompatActivity implements NavigationView.OnN
         } else {
             super.onBackPressed();
         }
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
     @Override
     public Loader<ArrayList<Void>> onCreateLoader(int id, Bundle args) {
@@ -281,8 +285,30 @@ public class NbaActivity extends AppCompatActivity implements NavigationView.OnN
 
     @Override
     public void onItemClick(int clickedItemIndex) {
+        SchedulerUtils.stopScheduledNewsLoad(this);
         Log.d(TAG, "*********WE'RE HERE*************");
-        Intent detailsIntent = new Intent(this, GameDetails.class);
-        startActivity(detailsIntent);
+        //Intent detailsIntent = new Intent(this, GameDetails.class);
+        //startActivity(detailsIntent);
+        cursor.moveToPosition(clickedItemIndex);
+// Intent intent=new Intent(this,GameDetails.class);
+        String hometeam = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_HOMETEAM));
+        String awayteam = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_AWAYTEAM));
+        String hometeamcity = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_HOMETEAMCITY));
+        String awayteamcity = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_AWAYTEAMCITY));
+        String hometeamscore = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_HOMESCORE));
+        String awayteamscore = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_AWAYSCORE));
+        String location = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_LOCATION));
+        findViewById(R.id.nba_response_result).setVisibility(View.GONE);
+        Bundle bundle = new Bundle();
+        bundle.putString("hometeam", hometeam);
+        NbaFragment fragobj = new NbaFragment();
+        fragobj.setArguments(bundle);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.contentMain, fragobj)
+                .addToBackStack(null)
+                .commit();
     }
 }
