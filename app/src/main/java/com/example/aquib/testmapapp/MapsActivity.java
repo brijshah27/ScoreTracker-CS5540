@@ -2,7 +2,6 @@ package com.example.aquib.testmapapp;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -19,8 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,7 +28,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -51,7 +47,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<Marker> destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
-    private FusedLocationProviderClient mFusedLocationClient;
+    //private FusedLocationProviderClient mFusedLocationClient;
     private GoogleMap mGoogleMap;
     private String TAG;
     protected LocationManager locationManager;
@@ -72,40 +68,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         etDestination = (EditText) findViewById(R.id.etDestination);
 
         //fusedLocation test
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
+//        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+//            return;
+//        }
         //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 0, this);
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        try {
-            mFusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
-                                // ...
-                                Log.d(TAG, "------------->location is: "+location);
-                                //getLastLocation();
-                            }
-                        }
-                    });
-        }catch (SecurityException e){
-            e.printStackTrace();
-        }
+        Log.d(TAG, "****inside onCreate*****");
 
         btnFindPath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "%%%%%%inside onClickListener%%%%%%");
                 sendRequest();
             }
         });
@@ -115,6 +96,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void sendRequest() {
         String origin = etOrigin.getText().toString();
         String destination = etDestination.getText().toString();
+        Log.d(TAG, "%%%%%%inside sendRequest%%%%%%");
         if (origin.isEmpty()) {
             Toast.makeText(this, "Please enter origin address!", Toast.LENGTH_SHORT).show();
             return;
@@ -133,13 +115,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        googleMap.getUiSettings().setCompassEnabled(true);
         googleMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap = googleMap;
+        mGoogleMap = googleMap;
+        enableUserLocation();
         LatLng csula = new LatLng(34.066806, -118.167704);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(csula, 18));
         originMarkers.add(mMap.addMarker(new MarkerOptions()
                 .title("Đại học Khoa học tự nhiên")
                 .position(csula)));
+        Log.d(TAG, "####### INSIDE onMapReady#######");
 
 //        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 //            // TODO: Consider calling
@@ -155,7 +141,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //            return;
 //        }
         //mMap.setMyLocationEnabled(true);
-        enableUserLocation();
+        //enableUserLocation();
     }
     private void enableUserLocation() {
         Log.d(TAG, "*****INSIDE FIRST METHOD*******");
@@ -177,7 +163,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 if (location != null) {
                     LatLng lastKnownLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    Log.d(TAG, "^^^^^^^Loc is: "+location.getLatitude());
+                    Log.d(TAG, "^^^^^^^Lat is: "+location.getLatitude() );
                     mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastKnownLatLng, 15.0f));
                 }
                 else{
@@ -247,8 +233,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onLocationChanged(Location location) {
-        double latitude = location.getLatitude();
-        Log.d(TAG, "+++++++++lat is: "+latitude);
+        //double latitude = location.getLatitude();
+        //Log.d(TAG, "+++++++++lat is: "+latitude);
     }
 
     @Override
