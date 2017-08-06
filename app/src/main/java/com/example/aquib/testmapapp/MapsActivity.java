@@ -12,7 +12,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -53,6 +52,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected LocationManager locationManager;
     protected LocationListener locationListener;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    String longtitue;
+    String latitude;
+    String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +65,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                address = null;
+            } else {
+                address= extras.getString("address");
+
+            }
+        } else {
+            address= (String) savedInstanceState.getSerializable("address");
+        }
+        Log.d(TAG, "Address is:>>>>>>>>>>>>"+address);
+
         btnFindPath = (Button) findViewById(R.id.btnFindPath);
         etOrigin = (EditText) findViewById(R.id.etOrigin);
         etDestination = (EditText) findViewById(R.id.etDestination);
-
+        etOrigin.setText(address);
+        etDestination.setText("Dodger Stadium");
         //fusedLocation test
         // locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -82,18 +98,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        }
         //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 0, this);
         Log.d(TAG, "****inside onCreate*****");
-
-        btnFindPath.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "%%%%%%inside onClickListener%%%%%%");
-                sendRequest();
-            }
-        });
+    sendRequest();
+//        btnFindPath.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d(TAG, "%%%%%%inside onClickListener%%%%%%");
+//                sendRequest();
+//            }
+//        });
     }
 
 
     private void sendRequest() {
+        //etOrigin.setText(address);
         String origin = etOrigin.getText().toString();
         String destination = etDestination.getText().toString();
         Log.d(TAG, "%%%%%%inside sendRequest%%%%%%");
@@ -206,7 +223,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         destinationMarkers = new ArrayList<>();
 
         for (Route route : routes) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 14));
             ((TextView) findViewById(R.id.tvDuration)).setText(route.duration.text);
             ((TextView) findViewById(R.id.tvDistance)).setText(route.distance.text);
 
