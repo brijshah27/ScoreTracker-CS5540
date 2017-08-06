@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.brij.myapplication.Database.Contract;
@@ -64,6 +65,7 @@ public class NBAAdapter extends RecyclerView.Adapter<NBAAdapter.ItemHolder> {
         TextView awayTeam;
         TextView homeTeamCity;
         TextView awayTeamCity;
+        ImageView vs;
         TextView homeTeamScore;
         TextView awayTeamScore;
         TextView Location;
@@ -72,11 +74,12 @@ public class NBAAdapter extends RecyclerView.Adapter<NBAAdapter.ItemHolder> {
             super(view);
             homeTeam = (TextView)view.findViewById(R.id.homeTeam);
             awayTeam = (TextView)view.findViewById(R.id.awayTeam);
-            homeTeamCity = (TextView)view.findViewById(R.id.homeTeamCity);
-            awayTeamCity = (TextView)view.findViewById(R.id.awayTeamCity);
+          //  homeTeamCity = (TextView)view.findViewById(R.id.homeTeamCity);
+          //  awayTeamCity = (TextView)view.findViewById(R.id.awayTeamCity);
+            vs=(ImageView) view.findViewById(R.id.vs_image);
             homeTeamScore = (TextView)view.findViewById(R.id.homeTeamScore);
             awayTeamScore = (TextView)view.findViewById(R.id.awayTeamScore);
-            Location = (TextView)view.findViewById(R.id.location);
+           // Location = (TextView)view.findViewById(R.id.location);
              view.setOnClickListener(this);
         }
 
@@ -99,12 +102,12 @@ public class NBAAdapter extends RecyclerView.Adapter<NBAAdapter.ItemHolder> {
             String awayteamscore=cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_AWAYSCORE));
             String location=cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_LOCATION));
 
-            homeTeam.setText("Home Team :"+hometeam);
-            awayTeam.setText("Away Team :"+awayteam);
+            homeTeam.setText(hometeam);
+            awayTeam.setText(awayteam);
             //homeTeamCity.setText("Home Team City :"+hometeamcity);
             //awayTeamCity.setText("Away Team City :"+awayteamcity);
-            homeTeamScore.setText("Home Team Score :"+hometeamscore);
-            awayTeamScore.setText("Away Team Score :"+awayteamscore);
+            homeTeamScore.setText(hometeamscore);
+            awayTeamScore.setText(awayteamscore);
             //Location.setText("Location is :"+location);
 
 

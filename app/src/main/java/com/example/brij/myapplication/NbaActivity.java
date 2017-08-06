@@ -301,6 +301,12 @@ public class NbaActivity extends AppCompatActivity implements NavigationView.OnN
         findViewById(R.id.nba_response_result).setVisibility(View.GONE);
         Bundle bundle = new Bundle();
         bundle.putString("hometeam", hometeam);
+        bundle.putString("awayteam",awayteam);
+        bundle.putString("hometeamcity",hometeamcity);
+        bundle.putString("awayteamcity",awayteamcity);
+        bundle.putString("hometeamscore",hometeamscore);
+        bundle.putString("awayteamscore",awayteamscore);
+        bundle.putString("location",location);
         NbaFragment fragobj = new NbaFragment();
         fragobj.setArguments(bundle);
 
