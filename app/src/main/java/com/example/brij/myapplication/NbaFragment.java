@@ -1,11 +1,13 @@
 package com.example.brij.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -22,8 +24,7 @@ public class NbaFragment extends Fragment {
     private TextView awayTeamCity;
     private TextView awayTeam;
     private TextView Location;
-
-
+    //Button mapLocation;
 
     public NbaFragment(){}
 
@@ -40,6 +41,7 @@ public class NbaFragment extends Fragment {
         homeTeamCity = (TextView) view.findViewById(R.id.hometeam_city);
         awayTeamCity = (TextView) view.findViewById(R.id.awayTeamCity);
         Location = (TextView) view.findViewById(R.id.Location);
+        Button mapLocation = (Button) view.findViewById(R.id.maplocation);
         String hometeam = getArguments().getString("hometeam");
         String awayteam = getArguments().getString("awayteam");
         String hometeamcity= getArguments().getString("hometeamcity");
@@ -47,6 +49,14 @@ public class NbaFragment extends Fragment {
         String location=getArguments().getString("location");
         String hometeamScore = getArguments().getString("hometeamscore");
         String awayteamScore = getArguments().getString("awayteamscore");
+        mapLocation.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                chnageActivity(getArguments().getString("location"));
+            }
+        });
+
+
        // return inflater.inflate(R.layout.fragment, container, false);
         homeTeam.setText(hometeam);
         awayTeam.setText(awayteam);
@@ -56,6 +66,12 @@ public class NbaFragment extends Fragment {
         homeTeamCity.setText(hometeamcity);
         Location.setText(location);
         return view;
+    }
+
+    private void chnageActivity(String location){
+        Intent intent = new Intent(getActivity(), GetUserLocation.class);
+        intent.putExtra("location", location);
+        startActivity(intent);
     }
 
 }

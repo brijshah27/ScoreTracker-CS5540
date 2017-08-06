@@ -46,6 +46,7 @@ public class GetUserLocation extends AppCompatActivity {
     private TextView mLongitudeText;
     Geocoder geocoder;
     List<Address> addresses;
+    String location;
 
 
     @Override
@@ -59,6 +60,20 @@ public class GetUserLocation extends AppCompatActivity {
         //mLongitudeText = (TextView) findViewById((R.id.longitude_text));
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                location = null;
+            } else {
+                location= extras.getString("location");
+
+            }
+        } else {
+            location = (String) savedInstanceState.getSerializable("location");
+        }
+        Log.d(TAG, "Location is:>>>>>>>>>>>>"+location);
     }
 
     @Override
@@ -125,6 +140,7 @@ public class GetUserLocation extends AppCompatActivity {
         Log.d(TAG,"Inside get user location>>>>"+mLastLocation.getLongitude()+" >>>"+mLastLocation.getLatitude());
         //intent.putExtra("let", mLastLocation.getLatitude());
         intent.putExtra("address", add);
+        intent.putExtra("location",location);
         startActivity(intent);
     }
 
