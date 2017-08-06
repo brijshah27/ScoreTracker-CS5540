@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/Project code 1.iml" filepath="$PROJECT_DIR$/Project code 1.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/ScoreTracker-CS5540.iml" filepath="$PROJECT_DIR$/ScoreTracker-CS5540.iml" />
+>>>>>>> 0dc8c6c324c0a081f88e48155fffa17385173a50
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item android:title="Sport List">
+    <item android:title="Competitions">
         <menu>
             <item
                 android:id="@+id/nav_all"
