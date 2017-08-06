@@ -4,8 +4,10 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
 import android.support.v4.app.LoaderManager;
@@ -179,6 +181,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
             ArrayList<NBAData> scoreFinal = new ArrayList<>();
 
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
 
             public ArrayList<Void> loadInBackground() {
@@ -192,8 +195,33 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
                     String jsonMLB = NetworkUtils.getResponseFromHttpUrlMlb();
                     mlb = parseJSON.parseJsonData(MainActivity.this, jsonMLB);
 
-                    scoreFinal.addAll(nba);
-                    scoreFinal.addAll(mlb);
+                    //scoreFinal.addAll(nba);
+                    //scoreFinal.addAll(mlb);
+                    int nbaLength = nba.size();
+                    int mlbLength = mlb.size();
+                    if(nbaLength>=mlbLength){
+                        for(int i = 0;i<nba.size();i++){
+                            if(mlb.get(i) != null){
+                                scoreFinal.add(mlb.get(i));
+                                scoreFinal.add(nba.get(i));
+                            }
+                            else{
+                                scoreFinal.add(nba.get(i));
+                            }
+                        }
+                    }
+                    else{
+                        for(int i = 0;i<mlb.size();i++){
+                            if(nba.get(i) != null){
+                                scoreFinal.add(mlb.get(i));
+                                scoreFinal.add(nba.get(i));
+                            }
+                            else{
+                                scoreFinal.add(mlb.get(i));
+                            }
+                        }
+                    }
+
 
                     db = new DBHelper(this.getContext()).getWritableDatabase();
                     DBUtils.insertnews(db, scoreFinal);
