@@ -15,7 +15,8 @@
         android:layout_height="200dp"
         card_view:cardCornerRadius="4dp"
         card_view:cardUseCompatPadding="true">
-        <!--card_view:cardBackgroundColor="#81D4FA"-->
+        <!--card_view:cardBackgroundColor="#4DB6AC"-->
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,56 +29,104 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="top|center_vertical|center_horizontal"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                    <RelativeLayout
-                        xmlns:android="http://schemas.android.com/apk/res/android"
+                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/RelativeLayout03"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/homeLogo"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="27dp"
+                            android:layout_marginStart="27dp"
+                            android:background="#1565C0"
+                            android:text="HOME"
+                            android:textAlignment="center"
+                            android:textColor="#FAFAFA"
+                            android:textSize="20sp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/awayLogo"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_gravity="left"
+                            android:layout_marginEnd="35dp"
+                            android:layout_marginRight="35dp"
+                            android:background="#D50000"
+                            android:text="AWAY"
+                            android:textAlignment="center"
+                            android:textColor="#FAFAFA"
+                            android:textSize="20sp"></TextView>
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="91dp"
+                    android:layout_gravity="top|center_vertical|center_horizontal"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/RelativeLayout01"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:padding="10dp">
 
 
-                    <TextView
-                        android:id="@+id/homeTeamScore"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="50sp"
+                        <TextView
+                            android:id="@+id/homeTeamScore"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_gravity="left"
 
 
-                        android:layout_alignBaseline="@+id/awayTeamScore"
-                        android:layout_alignBottom="@+id/awayTeamScore"
-                        android:layout_toLeftOf="@+id/vs_image"
-                        android:layout_toStartOf="@+id/vs_image"
-                        android:layout_marginRight="40dp"
-                        android:layout_marginEnd="40dp" />
+                            android:layout_marginEnd="40dp"
+                            android:layout_marginRight="40dp"
+                            android:layout_toLeftOf="@+id/vs_image"
+                            android:layout_toStartOf="@+id/vs_image"
+                            android:textSize="50sp" />
 
-                    <ImageView
-                        android:id="@+id/vs_image"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_gravity="center"
-                        android:adjustViewBounds="false"
-                        android:cropToPadding="false"
-                        android:src="@drawable/versus_sign"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true" />
+                        <ImageView
+                            android:id="@+id/vs_image"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:adjustViewBounds="false"
+                            android:cropToPadding="false"
+                            android:src="@drawable/versus_sign" />
 
-                    <TextView
-                        android:id="@+id/awayTeamScore"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:textSize="50sp"
-                        android:layout_marginRight="38dp"
-                        android:layout_marginEnd="38dp"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        <TextView
+                            android:id="@+id/awayTeamScore"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="right"
+                            android:layout_marginEnd="38dp"
+                            android:layout_marginRight="38dp"
+                            android:textSize="50sp" />
 
                     </RelativeLayout>
 
@@ -104,9 +153,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
-                            android:layout_marginEnd="35dp"
-                            android:layout_marginRight="35dp"
+                            android:layout_marginEnd="47dp"
+                            android:layout_marginRight="47dp"
                             android:textSize="20sp"
+                            android:textStyle="bold"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentEnd="true" />
@@ -118,11 +168,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             android:textSize="20sp"
+                            android:textStyle="bold"
+
+                            android:layout_marginLeft="33dp"
+                            android:layout_marginStart="33dp"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_marginLeft="47dp"
-                            android:layout_marginStart="47dp" />
+                            android:layout_alignParentStart="true" />
 
                     </RelativeLayout>
 
