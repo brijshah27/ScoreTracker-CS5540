@@ -6,20 +6,20 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="#376f89"
+    android:background="#fff"
     android:weightSum="1"
     tools:ignore="UseCompoundDrawables"
     tools:context="com.example.brij.myapplication.SplashScreenActivity">
 
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:paddingBottom="10dp"
-        android:textSize="40sp"
-        android:layout_gravity="center"/>
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/app_name"-->
+        <!--android:paddingBottom="10dp"-->
+        <!--android:textSize="40sp"-->
+        <!--android:layout_gravity="center"/>-->
 
 
     <ImageView
