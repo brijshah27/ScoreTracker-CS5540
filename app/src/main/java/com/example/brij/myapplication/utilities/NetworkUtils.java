@@ -2,6 +2,7 @@ package com.example.brij.myapplication.utilities;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Base64;
 import android.util.Log;
 
@@ -9,6 +10,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Scanner;
 
 
@@ -72,12 +76,20 @@ public class NetworkUtils {
 
 
     //MLB api call
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String getResponseFromHttpUrlMlb()  {
         String data = " ";
         StringBuilder builder = new StringBuilder();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -2);
+        dateFormat.format(cal.getTime());
+        String lastDayDate = ""+dateFormat.format(cal.getTime());
+        lastDayDate = lastDayDate.replaceAll("-","");
+        Log.d(TAG, "DATE DEBUG-------->>>>>: "+lastDayDate);
         try {
 
-            URL url = new URL("https://api.mysportsfeeds.com/v1.1/pull/mlb/2017-regular/scoreboard.json?fordate=20170624");
+            URL url = new URL("https://api.mysportsfeeds.com/v1.1/pull/mlb/2017-regular/scoreboard.json?fordate="+lastDayDate);
             String testValue = "brijshah27:brij1234";
             byte[] data1=testValue.getBytes(StandardCharsets.UTF_8);
             String encoding=Base64.encodeToString(data1 ,Base64.DEFAULT);
