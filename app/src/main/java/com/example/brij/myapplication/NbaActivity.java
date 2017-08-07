@@ -45,7 +45,7 @@ public class NbaActivity extends AppCompatActivity implements NavigationView.OnN
 
     private ProgressBar progressIndicator;
 
-
+    private  NavigationView navigationView;
     private Cursor cursor;
     private NBAAdapter nbaAdapter2;
     private SQLiteDatabase db;

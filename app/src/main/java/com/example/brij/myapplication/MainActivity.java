@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
     private ProgressBar progressIndicator;
 
+    private NavigationView navigationView;
+
 
     private Cursor cursor;
     private NBAAdapter nbaAdapter;
@@ -140,9 +142,15 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         if (id == R.id.nav_all) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            //String gameName = null;
+            //String gameName = null;7
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
             intent.putExtra("gameName", "all");
             startActivity(intent);
+
+
+
+
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
