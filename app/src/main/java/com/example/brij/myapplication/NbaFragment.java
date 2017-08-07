@@ -1,14 +1,21 @@
 package com.example.brij.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Brij on 8/2/17.
@@ -17,6 +24,7 @@ import android.widget.TextView;
 public class NbaFragment extends Fragment {
 
 
+    private Context context;
     private TextView homeTeamScore;
     private TextView awayTeamScore;
     private TextView homeTeam;
@@ -24,7 +32,14 @@ public class NbaFragment extends Fragment {
     private TextView awayTeamCity;
     private TextView awayTeam;
     private TextView Location;
-    //Button mapLocation;
+    private ImageView homeimage;
+    private  ImageView awayimage;
+    //Button mapLocat
+    private  static  final String TAG="nba";
+
+    ArrayList<String> logo=new ArrayList<String>();
+
+
 
     public NbaFragment(){}
 
@@ -41,6 +56,8 @@ public class NbaFragment extends Fragment {
         homeTeamCity = (TextView) view.findViewById(R.id.hometeam_city);
         awayTeamCity = (TextView) view.findViewById(R.id.awayTeamCity);
         Location = (TextView) view.findViewById(R.id.Location);
+        homeimage =(ImageView) view.findViewById(R.id.homeimage);
+        awayimage =(ImageView) view.findViewById(R.id.awayimage);
         Button mapLocation = (Button) view.findViewById(R.id.maplocation);
         String hometeam = getArguments().getString("hometeam");
         String awayteam = getArguments().getString("awayteam");
@@ -53,11 +70,33 @@ public class NbaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 chnageActivity(getArguments().getString("location"));
+
             }
         });
 
+        images.setList1(logo);
 
-       // return inflater.inflate(R.layout.fragment, container, false);
+        for(int i=0;i<logo.size();i++)
+        {
+            Log.d(TAG,"bolo"+logo.get(i).toString());
+            if(hometeam.toLowerCase().equals(logo.get(i).toString()))
+            {
+                int id=getResources().getIdentifier(logo.get(i).toString() ,"drawable","com.example.brij.myapplication");
+                Log.d(TAG,""+id);
+                awayimage.setImageResource(id);
+            }
+
+            if(awayteam.toLowerCase().equals(logo.get(i).toString()))
+            {
+                int id=getResources().getIdentifier(logo.get(i).toString() ,"drawable","com.example.brij.myapplication");
+                Log.d(TAG,""+id);
+                homeimage.setImageResource(id);
+            }
+        }
+
+
+
+        // return inflater.inflate(R.layout.fragment, container, false);
         homeTeam.setText(hometeam);
         awayTeam.setText(awayteam);
         homeTeamScore.setText(hometeamScore);
@@ -68,10 +107,12 @@ public class NbaFragment extends Fragment {
         return view;
     }
 
+
     private void chnageActivity(String location){
         Intent intent = new Intent(getActivity(), GetUserLocation.class);
         intent.putExtra("location", location);
         startActivity(intent);
     }
+
 
 }
