@@ -97,7 +97,6 @@
                             android:layout_gravity="center"
                             android:adjustViewBounds="false"
                             android:cropToPadding="false"
-                            android:src="@drawable/versus_sign"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true" />
@@ -112,7 +111,7 @@
                             android:layout_gravity="center"
                             android:adjustViewBounds="false"
                             android:cropToPadding="false"
-                            android:src="@drawable/versus_sign" />
+                            />
 
 
                         <TextView

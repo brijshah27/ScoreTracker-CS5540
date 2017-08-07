@@ -3,6 +3,8 @@ package com.example.brij.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class ScheduleDetails extends AppCompatActivity {
@@ -15,15 +17,20 @@ public class ScheduleDetails extends AppCompatActivity {
     TextView awayTeamTv;
     TextView gameDateTv;
     TextView locationTv;
+    Button maplocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_details);
-        homeTeamTv = (TextView) findViewById(R.id.homeTeam);
-        awayTeamTv = (TextView) findViewById(R.id.awayTeam);
-        gameDateTv = (TextView) findViewById(R.id.gameDate);
-        locationTv = (TextView) findViewById(R.id.location);
+        homeTeamTv = (TextView) findViewById(R.id.homeTeamScore);
+        awayTeamTv = (TextView) findViewById(R.id.awayTeamScore);
+       // gameDateTv = (TextView) findViewById(R.id.gameDate);
+        locationTv = (TextView) findViewById(R.id.Location);
+        maplocation=(Button)findViewById(R.id.maplocation);
+
+
+
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -47,10 +54,26 @@ public class ScheduleDetails extends AppCompatActivity {
         }
         homeTeamTv.setText(homeTeam);
         awayTeamTv.setText(awayTeam);
-        gameDateTv.setText(gameDate);
+       // gameDateTv.setText(gameDate);
         locationTv.setText(location);
 
+        maplocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chnageActivity(location);
 
+            }
+        });
+
+
+
+
+    }
+
+    public void chnageActivity(String location){
+        Intent intent = new Intent(ScheduleDetails.this, GetUserLocation.class);
+        intent.putExtra("location", location);
+        startActivity(intent);
 
     }
     @Override

@@ -169,6 +169,14 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
             startActivity(intent);
 
         }
+        if(id == R.id.nav_schedule_mlb){
+            Intent intent = new Intent(this, ScheduleGamesMLB.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            startActivity(intent);
+
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
@@ -218,15 +226,15 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
                     Log.d(TAG, "NBA------------" + jsonNBA);
 
                     String jsonMLB = NetworkUtils.getResponseFromHttpUrlMlb();
-                    mlb = parseJSON.parseJsonData(MainActivity.this, jsonMLB);
+                    mlb = parseJSON.parseJsonDataMLB(MainActivity.this, jsonMLB);
 
-                    //scoreFinal.addAll(nba);
-                    //scoreFinal.addAll(mlb);
+//scoreFinal.addAll(nba);
+//scoreFinal.addAll(mlb);
                     int nbaLength = nba.size();
                     int mlbLength = mlb.size();
                     if(nbaLength>=mlbLength){
                         for(int i = 0;i<nba.size();i++){
-                            if(mlb.get(i) != null){
+                            if(i!=mlbLength && i<mlbLength){
                                 scoreFinal.add(mlb.get(i));
                                 scoreFinal.add(nba.get(i));
                             }
@@ -237,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
                     }
                     else{
                         for(int i = 0;i<mlb.size();i++){
-                            if(nba.get(i) != null){
+                            if(i!=nbaLength && i<nbaLength){
                                 scoreFinal.add(mlb.get(i));
                                 scoreFinal.add(nba.get(i));
                             }
