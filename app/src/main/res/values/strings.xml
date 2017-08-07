@@ -1,9 +1,6 @@
 <resources>
-<<<<<<< HEAD
+
     <string name="app_name">ScoreTracker</string>
-=======
-    <string name="app_name">Score Tracker</string>
->>>>>>> fdc8e4c57f8dfc9987fb893c48beda152b92dc6c
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.brij.myapplication.model.NBAData;
+import com.example.brij.myapplication.model.ScheduleModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,6 +51,32 @@ public class parseJSON {
 
         return result;
     }
+
+    public static ArrayList<ScheduleModel> parseNBAScheduleJSON (String scheduleResponse) throws JSONException {
+        ArrayList<ScheduleModel> parseSchedule = new ArrayList<>();
+        JSONObject mainResponse = new JSONObject(scheduleResponse);
+        JSONObject fullGameSchedule = mainResponse.getJSONObject("fullgameschedule");
+        JSONArray gameEntry = fullGameSchedule.getJSONArray("gameentry");
+        Log.d(TAG, "****BEFORE FOR LOOP*****");
+        for(int i = 0;i<gameEntry.length();i++){
+            JSONObject entryObject = gameEntry.getJSONObject(i);
+            String gameDate = entryObject.getString("date");
+            Log.d(TAG, "$$$$$$$$$GAME DATE: "+gameDate);
+            JSONObject awayTeam = entryObject.getJSONObject("awayTeam");
+            String awayTeamName = awayTeam.getString("Name");
+            JSONObject homeTeam = entryObject.getJSONObject("homeTeam");
+            String homeTeamName = homeTeam.getString("Name");
+            String gameLocation = entryObject.getString("location");
+            //public ScheduleModel(String gameName, String homeTeam, String awayTeam, String gameLocation, String gameDate) {
+            ScheduleModel scheduleModel = new ScheduleModel("nba", homeTeamName, awayTeamName, gameLocation, gameDate);
+            parseSchedule.add(scheduleModel);
+            Log.d(TAG, "$$$$$$$$$DATA: "+awayTeamName);
+            Log.d(TAG, "$$$$$$$$$DATA: "+homeTeamName);
+            Log.d(TAG, "$$$$$$$$$DATA: "+gameLocation);
+        }
+        return parseSchedule;
+    }
+
 
 
 

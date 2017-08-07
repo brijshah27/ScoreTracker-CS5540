@@ -21,6 +21,9 @@
                 android:id="@+id/nav_live"
                 android:icon="@drawable/ic_live"
                 android:title="Live Score Demo" />
+            <item
+                android:id="@+id/nav_schedule"
+                android:title="Game Schedule" />
         </menu>
     </item>
     </group>

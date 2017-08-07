@@ -32,7 +32,9 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".MapsActivity" />
         <activity android:name=".GetUserLocation" />
-        <activity android:name=".LiveScoreDemo"></activity>
+        <activity android:name=".LiveScoreDemo" />
+        <activity android:name=".ScheduleGames" />
+        <activity android:name=".ScheduleDetails"></activity>
     </application>
 
 </manifest>

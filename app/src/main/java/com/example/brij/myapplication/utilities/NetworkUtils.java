@@ -140,4 +140,35 @@ public class NetworkUtils {
         return  data;
 
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String getScheduleNBA(URL url){
+        String data = "";
+        try{
+            //url = new URL("https://api.mysportsfeeds.com/v1.1/pull/nba/2017-playoff/full_game_schedule.json");
+            String testValue = "brijshah27:brij1234";
+            byte[] data1=testValue.getBytes(StandardCharsets.UTF_8);
+            String encoding=Base64.encodeToString(data1 ,Base64.DEFAULT);
+            Log.d(TAG, "^^^INSIDE TRY");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setDoInput(true);
+            connection.setRequestProperty("Authorization", "Basic "+ encoding );
+            InputStream content = (InputStream)connection.getInputStream();
+            Scanner scanner = new Scanner(content);
+            scanner.useDelimiter("\\A");
+
+            boolean hasInput = scanner.hasNext();
+            if (hasInput) {
+                data=data+scanner.next();
+            } else {
+                data=null;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.d(TAG ,"Exception in schedule for NBA");
+        }
+
+        return data;
+    }
 }
