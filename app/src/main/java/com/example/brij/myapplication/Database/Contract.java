@@ -18,6 +18,7 @@ public class Contract  {
         public static final String COLUMN_NAME_HOMESCORE="homescore";
         public static final String COLUMN_NAME_AWAYSCORE="awayscore";
         public static final String COLUMN_NAME_LOCATION="location";
+        public static final String COLUMN_NAME_DATE = "gameDate";
 
     }
 }

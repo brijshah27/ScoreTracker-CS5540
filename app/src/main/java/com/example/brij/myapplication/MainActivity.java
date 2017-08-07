@@ -410,6 +410,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         String hometeamscore = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_HOMESCORE));
         String awayteamscore = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_AWAYSCORE));
         String location = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_LOCATION));
+        String gameDate = cursor.getString(cursor.getColumnIndex(Contract.TABLE_GAMES.COLUMN_NAME_DATE));
         findViewById(R.id.nba_response_result).setVisibility(View.GONE);
         Bundle bundle = new Bundle();
         bundle.putString("hometeam", hometeam);
@@ -419,6 +420,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         bundle.putString("hometeamscore",hometeamscore);
         bundle.putString("awayteamscore",awayteamscore);
         bundle.putString("location",location);
+        bundle.putString("gameDate", gameDate);
         NbaFragment fragobj = new NbaFragment();
         fragobj.setArguments(bundle);
 

@@ -11,8 +11,8 @@ import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION=2;
-    private static final String DATABASE_NAME="scores_1.db";
+    private static final int DATABASE_VERSION=4;
+    private static final String DATABASE_NAME="scores_3.db";
     private static final String TAG="dbhelper";
 
 
@@ -30,7 +30,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 Contract.TABLE_GAMES.COLUMN_NAME_AWAYTEAMCITY+" TEXT NOT NULL, "+
                 Contract.TABLE_GAMES.COLUMN_NAME_HOMESCORE+" TEXT NOT NULL, "+
                 Contract.TABLE_GAMES.COLUMN_NAME_AWAYSCORE+" TEXT NOT NULL, "+
-                Contract.TABLE_GAMES.COLUMN_NAME_LOCATION+" TEXT NOT NULL "+
+                Contract.TABLE_GAMES.COLUMN_NAME_LOCATION+" TEXT NOT NULL, "+
+                Contract.TABLE_GAMES.COLUMN_NAME_DATE+" TEXT NOT NULL "+
                 "); ";
 
 

@@ -221,7 +221,7 @@
         android:id="@+id/match_info"
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="235dp"
         card_view:cardCornerRadius="4dp"
         card_view:cardUseCompatPadding="true">
         <!--card_view:cardBackgroundColor="#4DB6AC"-->
@@ -329,11 +329,43 @@
                         android:layout_alignStart="@+id/awayTeamCity"
                         android:textSize="20sp" />
 
+
+                    <TextView
+                        android:id="@+id/datelogo"
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+
+
+                        android:layout_below="@+id/LocationLogo"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="11dp"
+                        android:background="#D50000"
+                        android:text="DATE"
+                        android:textAlignment="center"
+                        android:textColor="#FAFAFA"
+                        android:textSize="20sp">
+
+                    </TextView>
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/dateTv"
+                        android:text="Date Here"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:layout_alignTop="@+id/datelogo"
+                        android:layout_alignLeft="@+id/Location"
+                        android:layout_alignStart="@+id/Location" />
+
+
                     <Button
                         android:id="@+id/maplocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Get Direction!"
+                        android:text="Get Directions"
                         android:layout_alignParentBottom="true"
                         android:layout_toRightOf="@+id/LocationLogo"
                         android:layout_toEndOf="@+id/LocationLogo" />
@@ -343,6 +375,7 @@
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
+
 
 
 

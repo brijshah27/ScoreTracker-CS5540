@@ -16,9 +16,10 @@ public class NBAData {
     private String homeScore;
     private String awayScore;
     private String location;
+    private String gameDate;
 
 
-    public NBAData(String homeTeam, String awayTeam, String homeTeamCity, String awayTeamCity, String homeScore, String awayScore, String location) {
+    public NBAData(String homeTeam, String awayTeam, String homeTeamCity, String awayTeamCity, String homeScore, String awayScore, String location, String gameDate) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.homeTeamCity = homeTeamCity;
@@ -26,8 +27,17 @@ public class NBAData {
         this.homeScore = homeScore;
         this.awayScore = awayScore;
         this.location = location;
+        this.gameDate = gameDate;
 
 
+    }
+
+    public String getGameDate() {
+        return gameDate;
+    }
+
+    public void setGameDate(String gameDate) {
+        this.gameDate = gameDate;
     }
 
     public String getHomeTeam() {

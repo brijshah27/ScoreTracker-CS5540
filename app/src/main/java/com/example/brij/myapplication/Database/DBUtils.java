@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import static com.example.brij.myapplication.Database.Contract.TABLE_GAMES.COLUMN_NAME_AWAYSCORE;
 import static com.example.brij.myapplication.Database.Contract.TABLE_GAMES.COLUMN_NAME_AWAYTEAM;
 import static com.example.brij.myapplication.Database.Contract.TABLE_GAMES.COLUMN_NAME_AWAYTEAMCITY;
+import static com.example.brij.myapplication.Database.Contract.TABLE_GAMES.COLUMN_NAME_DATE;
 import static com.example.brij.myapplication.Database.Contract.TABLE_GAMES.COLUMN_NAME_HOMESCORE;
 import static com.example.brij.myapplication.Database.Contract.TABLE_GAMES.COLUMN_NAME_HOMETEAM;
 import static com.example.brij.myapplication.Database.Contract.TABLE_GAMES.COLUMN_NAME_HOMETEAMCITY;
@@ -31,7 +32,7 @@ public class DBUtils {
                 null,
                 null,
                 null,
-                Contract.TABLE_GAMES.COLUMN_NAME_LOCATION+ " DESC");
+                Contract.TABLE_GAMES.COLUMN_NAME_DATE+ " DESC");
         return cursor;
     }
 
@@ -52,7 +53,7 @@ public class DBUtils {
                 cv.put(COLUMN_NAME_AWAYSCORE, Item.getAwayScore());
                 cv.put(COLUMN_NAME_AWAYSCORE, Item.getAwayScore());
                 cv.put(COLUMN_NAME_LOCATION, Item.getLocation() );
-
+                cv.put(COLUMN_NAME_DATE, Item.getGameDate());
                 db.insert(TABLE_NAME, null, cv);
             }
             db.setTransactionSuccessful();

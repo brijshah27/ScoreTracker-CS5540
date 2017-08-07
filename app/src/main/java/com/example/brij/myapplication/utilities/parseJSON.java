@@ -44,7 +44,8 @@ public class parseJSON {
             String homeScore = gameObject.getString("homeScore");
             String awayScore = gameObject.getString("awayScore");
             String location = game.getString("location");
-            NBAData items = new NBAData(homeTeamName, awayTeamName, homeTeamCity, awayTeamCity, homeScore, awayScore, location);
+            String gameDate = game.getString("date");
+            NBAData items = new NBAData(homeTeamName, awayTeamName, homeTeamCity, awayTeamCity, homeScore, awayScore, location, gameDate);
             result.add(items);
             Log.v("data is:", items.getHomeTeam()+items.getAwayScore()+items.getHomeTeamCity()+items.getAwayTeamCity()+items.getHomeScore()+items.getAwayScore()+items.getLocation());
         }
@@ -77,7 +78,8 @@ public class parseJSON {
             String homeScore = gameObject.getString("homeScore");
             String awayScore = gameObject.getString("awayScore");
             String location = game.getString("location");
-            NBAData items = new NBAData(homeTeamName, awayTeamName, homeTeamCity, awayTeamCity, homeScore, awayScore, location);
+            String gameDate = game.getString("date");
+            NBAData items = new NBAData(homeTeamName, awayTeamName, homeTeamCity, awayTeamCity, homeScore, awayScore, location, gameDate);
             result.add(items);
             Log.v("data is:", items.getHomeTeam()+items.getAwayScore()+items.getHomeTeamCity()+items.getAwayTeamCity()+items.getHomeScore()+items.getAwayScore()+items.getLocation());
         }

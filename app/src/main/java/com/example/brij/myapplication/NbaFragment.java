@@ -2,7 +2,6 @@ package com.example.brij.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Brij on 8/2/17.
@@ -34,6 +32,7 @@ public class NbaFragment extends Fragment {
     private TextView Location;
     private ImageView homeimage;
     private  ImageView awayimage;
+    private TextView dateTextView;
     //Button mapLocat
     private  static  final String TAG="nba";
 
@@ -58,6 +57,7 @@ public class NbaFragment extends Fragment {
         Location = (TextView) view.findViewById(R.id.Location);
         homeimage =(ImageView) view.findViewById(R.id.homeimage);
         awayimage =(ImageView) view.findViewById(R.id.awayimage);
+        dateTextView = (TextView) view.findViewById(R.id.dateTv);
         Button mapLocation = (Button) view.findViewById(R.id.maplocation);
         String hometeam = getArguments().getString("hometeam");
         String awayteam = getArguments().getString("awayteam");
@@ -66,6 +66,7 @@ public class NbaFragment extends Fragment {
         String location=getArguments().getString("location");
         String hometeamScore = getArguments().getString("hometeamscore");
         String awayteamScore = getArguments().getString("awayteamscore");
+        String gameDate = getArguments().getString("gameDate");
         mapLocation.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -104,6 +105,7 @@ public class NbaFragment extends Fragment {
         awayTeamCity.setText(awayteamcity);
         homeTeamCity.setText(hometeamcity);
         Location.setText(location);
+        dateTextView.setText(gameDate);
         return view;
     }
 
