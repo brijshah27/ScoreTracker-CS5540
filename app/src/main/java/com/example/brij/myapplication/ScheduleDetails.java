@@ -3,9 +3,13 @@ package com.example.brij.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class ScheduleDetails extends AppCompatActivity {
 
@@ -18,6 +22,12 @@ public class ScheduleDetails extends AppCompatActivity {
     TextView gameDateTv;
     TextView locationTv;
     Button maplocation;
+    private ImageView homeimage;
+    private  ImageView awayimage;
+    //Button mapLocat
+    private  static  final String TAG="nba";
+
+    ArrayList<String> logo=new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +38,9 @@ public class ScheduleDetails extends AppCompatActivity {
        // gameDateTv = (TextView) findViewById(R.id.gameDate);
         locationTv = (TextView) findViewById(R.id.Location);
         maplocation=(Button)findViewById(R.id.maplocation);
+        homeimage =(ImageView) findViewById(R.id.homeimage);
+        awayimage =(ImageView) findViewById(R.id.awayimage);
+
 
 
 
@@ -56,6 +69,25 @@ public class ScheduleDetails extends AppCompatActivity {
         awayTeamTv.setText(awayTeam);
        // gameDateTv.setText(gameDate);
         locationTv.setText(location);
+        images.setList1(logo);
+
+        for(int i=0;i<logo.size();i++)
+        {
+            Log.d(TAG,"bolo"+logo.get(i).toString());
+            if(homeTeam.toLowerCase().equals(logo.get(i).toString()))
+            {
+                int id=getResources().getIdentifier(logo.get(i).toString() ,"drawable","com.example.brij.myapplication");
+                Log.d(TAG,""+id);
+                awayimage.setImageResource(id);
+            }
+
+            if(awayTeam.toLowerCase().equals(logo.get(i).toString()))
+            {
+                int id=getResources().getIdentifier(logo.get(i).toString() ,"drawable","com.example.brij.myapplication");
+                Log.d(TAG,""+id);
+                homeimage.setImageResource(id);
+            }
+        }
 
         maplocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +114,7 @@ public class ScheduleDetails extends AppCompatActivity {
 
         super.onBackPressed();
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, ScheduleGames.class);
         startActivity(intent);
     }
 }

@@ -167,6 +167,25 @@ public class NbaActivity extends AppCompatActivity implements NavigationView.OnN
             startActivity(intent);
 
         }
+        if(id == R.id.nav_schedule){
+            Intent intent = new Intent(this, ScheduleGames.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            //String gameName = null;7
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            //intent.putExtra("gameName", "all");
+            startActivity(intent);
+
+        }
+
+        if(id == R.id.nav_schedule_mlb){
+        Intent intent = new Intent(this, ScheduleGamesMLB.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        startActivity(intent);
+
+    }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 

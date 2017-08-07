@@ -90,18 +90,31 @@
                         android:layout_height="wrap_content"
                         android:padding="10dp">
 
-
-                        <TextView
-                            android:id="@+id/homeTeamScore"
-                            android:layout_width="100dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="left"
-
-
-                            android:textSize="25sp"
-                            android:layout_alignParentBottom="true"
+                        <ImageView
+                            android:id="@+id/homeimage"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_gravity="center"
+                            android:adjustViewBounds="false"
+                            android:cropToPadding="false"
+                            android:layout_alignParentTop="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:src="@drawable/teamlogo"/>
+
+                        <ImageView
+                            android:id="@+id/awayimage"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_gravity="center"
+                            android:adjustViewBounds="false"
+                            android:cropToPadding="false"
+                            android:src="@drawable/teamlogo"
+                            />
+
 
                         <ImageView
                             android:id="@+id/vs_image"
@@ -113,19 +126,6 @@
                             android:adjustViewBounds="false"
                             android:cropToPadding="false"
                             android:src="@drawable/versus_sign" />
-
-                        <TextView
-                            android:id="@+id/awayTeamScore"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-
-                            android:textSize="25sp"
-                            android:layout_marginRight="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignBottom="@+id/vs_image"
-                            android:layout_alignTop="@+id/homeTeamScore" />
 
                     </RelativeLayout>
 
@@ -147,11 +147,27 @@
                         android:padding="10dp">
 
 
+                        <TextView
+                            android:id="@+id/homeTeamScore"
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:layout_alignParentLeft="true"
 
 
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="left"
+                            android:textSize="25sp" />
 
+                        <TextView
+                            android:id="@+id/awayTeamScore"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
 
-
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:textSize="25sp" />
                     </RelativeLayout>
 
                 </LinearLayout>
