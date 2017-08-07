@@ -87,7 +87,7 @@ public class ScheduleGames extends AppCompatActivity {
                     @Override
                     public void onItemClick(int clickedItemIndex) {
                         String date = scheduleModels.get(clickedItemIndex).getGameDate();
-                        Toast.makeText(ScheduleGames.this,"Clicked the date:"+date,Toast.LENGTH_LONG).show();
+                        Toast.makeText(ScheduleGames.this,"Showing schedule for :"+date,Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(ScheduleGames.this, ScheduleDetails.class);
                         intent.putExtra("homeTeam", scheduleModels.get(clickedItemIndex).getHomeTeam());
                         intent.putExtra("awayTeam", scheduleModels.get(clickedItemIndex).getAwayTeam());

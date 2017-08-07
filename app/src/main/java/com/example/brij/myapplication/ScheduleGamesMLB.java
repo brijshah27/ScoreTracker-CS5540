@@ -66,6 +66,7 @@ public class ScheduleGamesMLB extends AppCompatActivity {
             }
             try {
                 resultSchedule = parseJSON.parseNBAScheduleJSON(scheduleResponse);
+
             Log.d(TAG, "$$$$Getting prase dataN$$$$$$");
             }catch (Exception e){
 //Log.d(TAG, "$$$$INSIDE EXCEPTION 22222$$$$$$");
@@ -87,7 +88,7 @@ public class ScheduleGamesMLB extends AppCompatActivity {
                     @Override
                     public void onItemClick(int clickedItemIndex) {
                         String date = scheduleModels.get(clickedItemIndex).getGameDate();
-                        Toast.makeText(ScheduleGamesMLB.this,"Clicked the date:"+date,Toast.LENGTH_LONG).show();
+                        Toast.makeText(ScheduleGamesMLB.this,"Showing schedule for:"+date,Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(ScheduleGamesMLB.this, ScheduleDetails.class);
                         intent.putExtra("homeTeam", scheduleModels.get(clickedItemIndex).getHomeTeam());
                         intent.putExtra("awayTeam", scheduleModels.get(clickedItemIndex).getAwayTeam());
