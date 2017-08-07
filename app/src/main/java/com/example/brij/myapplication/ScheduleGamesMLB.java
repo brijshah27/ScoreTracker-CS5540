@@ -51,7 +51,7 @@ public class ScheduleGamesMLB extends AppCompatActivity {
             String scheduleResponse = "";
             URL url = null;
             try {
-                url = new URL("https://api.mysportsfeeds.com/v1.1/pull/nba/2017-playoff/full_game_schedule.json");
+                url = new URL("https://api.mysportsfeeds.com/v1.1/pull/mlb/2017-regular/full_game_schedule.json");
                 Log.d(TAG, "URL is>>>>>>>>>>"+url);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
