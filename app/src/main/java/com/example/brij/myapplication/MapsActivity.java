@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -57,6 +58,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String latitude;
     String address;
     String location;
+    String current_long;
+    String current_lat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,17 +75,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if(extras == null) {
                 address = null;
                 location = null;
+                current_lat = null;
+                current_long = null;
             } else {
                 address= extras.getString("address");
                 location = extras.getString("location");
+                current_long = extras.getString("current_long");
+                current_lat = extras.getString("current_lat");
 
             }
         } else {
             address= (String) savedInstanceState.getSerializable("address");
             location= (String) savedInstanceState.getSerializable("location");
+            current_long= (String) savedInstanceState.getSerializable("current_long");
+            current_lat= (String) savedInstanceState.getSerializable("current_lat");
+
         }
         Log.d(TAG, "Address is:>>>>>>>>>>>>"+address);
         Log.d(TAG, "Location is:>>>>>>>>>>>>"+location);
+        Log.d(TAG, "Current long is:>>>>>>>>>>>>"+current_long);
 
         btnFindPath = (Button) findViewById(R.id.btnFindPath);
         etOrigin = (EditText) findViewById(R.id.etOrigin);
@@ -105,13 +116,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 0, this);
         Log.d(TAG, "****inside onCreate*****");
         sendRequest();
-//        btnFindPath.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "%%%%%%inside onClickListener%%%%%%");
-//                sendRequest();
-//            }
-//        });
+        btnFindPath.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "%%%%%%inside onClickListener%%%%%%");
+                sendRequest();
+            }
+        });
     }
 
 
@@ -143,12 +154,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mGoogleMap = googleMap;
         enableUserLocation();
-        LatLng csula = new LatLng(34.066806, -118.167704);
+        LatLng csula = new LatLng(Double.parseDouble(current_lat), Double.parseDouble(current_long));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(csula, 18));
         originMarkers.add(mMap.addMarker(new MarkerOptions()
-                .title("Đại học Khoa học tự nhiên")
+                .title("you're here!")
                 .position(csula)));
         Log.d(TAG, "####### INSIDE onMapReady#######");
+
 
 //        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 //            // TODO: Consider calling
@@ -229,9 +241,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         destinationMarkers = new ArrayList<>();
 
         for (Route route : routes) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 14));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 12));
             ((TextView) findViewById(R.id.tvDuration)).setText(route.duration.text);
-            ((TextView) findViewById(R.id.tvDistance)).setText(route.distance.text);
+            String distanceString = route.distance.text;
+            distanceString = distanceString.replaceAll(",","");
+            distanceString = distanceString.replaceAll(" mi","");
+            distanceString = distanceString.replaceAll(" ", "");
+            Log.d(TAG, "------------Distance debugger: "+distanceString);
+            if(Double.parseDouble(distanceString)>100.00){
+
+                ((TextView) findViewById(R.id.tvDistance)).setText(route.distance.text);
+                alertUser();
+                Log.d(TAG, "too much long route>>>>>>>>>>>>>>");
+            }
+            else{
+                ((TextView) findViewById(R.id.tvDistance)).setText(route.distance.text);
+            }
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue))
@@ -252,6 +277,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             polylinePaths.add(mMap.addPolyline(polylineOptions));
         }
+    }
+
+    private void alertUser(){
+        Toast.makeText(MapsActivity.this,"Distance is more than 100 miles!", Toast.LENGTH_LONG).show();
     }
 
     @Override

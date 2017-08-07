@@ -139,8 +139,12 @@ public class GetUserLocation extends AppCompatActivity {
         //intent.putExtra("long", mLastLocation.getLongitude());
         Log.d(TAG,"Inside get user location>>>>"+mLastLocation.getLongitude()+" >>>"+mLastLocation.getLatitude());
         //intent.putExtra("let", mLastLocation.getLatitude());
+        String current_long = ""+mLastLocation.getLongitude();
+        String current_lat = ""+mLastLocation.getLatitude();
         intent.putExtra("address", add);
         intent.putExtra("location",location);
+        intent.putExtra("current_long", current_long);
+        intent.putExtra("current_lat", current_lat);
         startActivity(intent);
     }
 
