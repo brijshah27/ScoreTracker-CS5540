@@ -29,9 +29,17 @@ public class NetworkUtils {
     public static String getResponseFromHttpUrl()  {
         String data = " ";
         StringBuilder builder = new StringBuilder();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -3);
+        dateFormat.format(cal.getTime());
+        String lastDayDate2 = ""+dateFormat.format(cal.getTime());
+        lastDayDate2 = lastDayDate2.replaceAll("-","");
+        lastDayDate2 = "20170424";
+        //Log.d(TAG, "DATE DEBUG NBA-------->>>>>: "+lastDayDate2);
         try {
 
-            URL url = new URL("https://api.mysportsfeeds.com/v1.1/pull/nba/2017-playoff/scoreboard.json?fordate=20170424");
+            URL url = new URL("https://api.mysportsfeeds.com/v1.1/pull/nba/2017-playoff/scoreboard.json?fordate="+lastDayDate2);
             String testValue = "brijshah27:brij1234";
             byte[] data1=testValue.getBytes(StandardCharsets.UTF_8);
            String encoding=Base64.encodeToString(data1 ,Base64.DEFAULT);
@@ -84,8 +92,10 @@ public class NetworkUtils {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -2);
         dateFormat.format(cal.getTime());
+
         String lastDayDate = ""+dateFormat.format(cal.getTime());
         lastDayDate = lastDayDate.replaceAll("-","");
+
         Log.d(TAG, "DATE DEBUG-------->>>>>: "+lastDayDate);
         try {
 

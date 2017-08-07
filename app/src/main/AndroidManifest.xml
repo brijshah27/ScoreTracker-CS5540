@@ -31,7 +31,8 @@
         <activity android:name=".GameDetails" />
         <activity android:name=".MainActivity" />
         <activity android:name=".MapsActivity" />
-        <activity android:name=".GetUserLocation"></activity>
+        <activity android:name=".GetUserLocation" />
+        <activity android:name=".LiveScoreDemo"></activity>
     </application>
 
 </manifest>

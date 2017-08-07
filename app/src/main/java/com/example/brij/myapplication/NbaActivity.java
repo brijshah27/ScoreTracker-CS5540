@@ -157,6 +157,16 @@ public class NbaActivity extends AppCompatActivity implements NavigationView.OnN
             intent.putExtra("gameName", "all");
             startActivity(intent);
         }
+        if(id == R.id.nav_live){
+            Intent intent = new Intent(this, LiveScoreDemo.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            //String gameName = null;7
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            //intent.putExtra("gameName", "all");
+            startActivity(intent);
+
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
