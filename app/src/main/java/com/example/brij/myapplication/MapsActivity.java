@@ -38,6 +38,8 @@ import Modules.DirectionFinder;
 import Modules.DirectionFinderListener;
 import Modules.Route;
 
+//source for permission check and map drawing: stackoverflow.com and Android Documentation
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, DirectionFinderListener, LocationListener {
 
     private GoogleMap mMap;

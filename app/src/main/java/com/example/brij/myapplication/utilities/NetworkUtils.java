@@ -35,6 +35,7 @@ public class NetworkUtils {
         dateFormat.format(cal.getTime());
         String lastDayDate2 = ""+dateFormat.format(cal.getTime());
         lastDayDate2 = lastDayDate2.replaceAll("-","");
+        //This is because the API wasn't giving us current data, for live score, please check LiveScoreDemo Activity
         lastDayDate2 = "20170424";
         //Log.d(TAG, "DATE DEBUG NBA-------->>>>>: "+lastDayDate2);
         try {
@@ -90,6 +91,7 @@ public class NetworkUtils {
         StringBuilder builder = new StringBuilder();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
+        //API is giving us data for a day prior to the current day, this is why passing the date of the day before
         cal.add(Calendar.DATE, -2);
         dateFormat.format(cal.getTime());
 
